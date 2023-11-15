@@ -93,7 +93,7 @@ export default function Home() {
       <Toaster />
       <div className='w-2/3'>
         <div className='h-[60vh]'>
-          <div className="flex  items-center justify-between">
+          <div className="flex pt-2 items-center justify-between">
             <div className="flex flex-col gap-4 w-1/3 items-start pr-2 mx-12">
               <Image className="" src="./bell.svg" width={40} height={40} alt="Bell Image" />
               <h1 className='text-shadow text-3xl'>Get notified when a highly correlated whale makes a move</h1>
@@ -120,7 +120,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-y-4  pt-24">
+        <div className="flex flex-col items-end gap-y-4 pt-24">
           <h1 className="text-2xl pr-12">Testimonials</h1>
           <div className="w-[90%] border-b border-gray-200 opacity-40 mx-12 mb-2"></div>
 
@@ -139,7 +139,7 @@ export default function Home() {
 
       </div>
 
-      <div className='flex flex-col items-center justify-center w-[35vw] bg-white gap-4'>
+      <div className='flex flex-col items-center justify-center w-[35vw] bg-white drop-shadow-2xl gap-4'>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-2/3">
           <h1 className="text-4xl text-gray-300 pb-4">Sign up for exclusive access.</h1>
           <input className="focus:outline-none drop-shadow-lg border border-gray-200 text-black rounded-lg p-4" type="text" value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder="Your email address" />
