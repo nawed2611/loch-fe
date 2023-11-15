@@ -1,113 +1,153 @@
-import Image from 'next/image'
+"use client";
+
+import TestimonialCard from "@/components/testimonial/card"
+import { motion } from 'framer-motion';
+import Image from "next/image";
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from "react";
+import { Toaster, toast } from 'sonner';
+
+const Card1 = () => (
+  <div className="flex flex-col card-bg text-black w-1/2 p-4 rounded-lg gap-y-2">
+    <div className="flex items-center justify-between">
+      <Image src="./bell2.svg" width={25} height={25} alt="Bell Image" />
+      <button className="rounded-lg p-2 font-semibold text-xs">Save</button>
+    </div>
+    <p className="w-3/4 text-sm">
+      We’ll be sending
+      notifications to you
+      here
+    </p>
+
+    <form className="flex flex-col pt-2">
+      <input className="focus:outline-none placeholder-black border p-2 text-black rounded-md text-xs" type="text" placeholder="hello@gmail.com" />
+    </form>
+  </div>
+)
+
+const Card2 = () => (
+  <div className="flex flex-col card-bg text-black w-1/2 p-4 rounded-lg gap-y-2">
+    <div className="flex items-center justify-between">
+      <Image src="./barchart.svg" width={25} height={25} alt="Bell Image" />
+      <button className="rounded-lg p-2 font-semibold text-xs">Save</button>
+    </div>
+    <p className="w-3/4 text-sm">
+      Notify me when any wallets
+      move more than
+    </p>
+
+    <form className="flex flex-col pt-2">
+      <input className="focus:outline-none placeholder-black border p-2 text-black rounded-md text-xs" type="text" placeholder="hello@gmail.com" />
+    </form>
+  </div>
+)
+
+const Card3 = () => (
+  <div className="flex flex-col card-bg text-black w-1/2 p-4 rounded-lg gap-y-2">
+    <div className="flex items-center justify-between">
+      <Image src="./clock.svg" width={25} height={25} alt="Bell Image" />
+
+      <button className="rounded-lg p-2 font-semibold text-xs">Save</button>
+    </div>
+    <p className="w-3/4 text-sm">
+      Notify me when any wallet dormant for
+    </p>
+
+    <form className="flex flex-col pt-2">
+      <input className="focus:outline-none placeholder-black border p-2 text-black rounded-md text-xs" type="text" placeholder="hello@gmail.com" />
+    </form>
+  </div>
+)
 
 export default function Home() {
+  const repoContainer: any = useRef();
+  const [width, setWidth] = useState(0);
+  const [email, setEmail] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    setWidth(- repoContainer.current.scrollWidth + repoContainer.current.offsetWidth);
+  }, []);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    if (email === "") {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    // do regex check for email
+    const regex = /\S+@\S+\.\S+/;
+
+    if (!regex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    router.push("https://app.loch.one/welcome");
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex h-screen">
+      <Toaster />
+      <div className='w-2/3'>
+        <div className='h-[60vh]'>
+          <div className="flex  items-center justify-between">
+            <div className="flex flex-col gap-4 w-1/3 items-start pr-2 mx-12">
+              <Image className="" src="./bell.svg" width={40} height={40} alt="Bell Image" />
+              <h1 className='text-shadow text-3xl'>Get notified when a highly correlated whale makes a move</h1>
+              <p className="opacity-70">Find out when a certain whale moves more than any preset amount on-chain or when a dormant whale you care about becomes active.</p>
+            </div>
+            <div className="flex items-end w-1/3">
+              <motion.div ref={repoContainer} whileTap={{ cursor: "grabbing" }} className="cursor-grab flex overflow-hidden rounded-l-xl drop-shadow-2xl">
+                <motion.div drag="x" dragConstraints={{ right: 0, left: -300 }} className="flex gap-4 ">
+                  <Card1 />
+                  <Card2 />
+                  <Card3 />
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Image src="./cohorts.svg" width={420} height={420} alt="Cohorts Image" />
+            <div className="flex flex-col gap-4 w-1/3 items-end pr-2 mx-12">
+              <Image className="" src="./eye.svg" width={40} height={40} alt="Bell Image" />
+              <h1 className='text-right text-3xl'>Watch what the whales are doing</h1>
+              <p className="text-right opacity-70">All whales are not equal. Know exactly what the whales impacting YOUR portfolio are doing.</p>
+            </div>
+          </div>
         </div>
+
+        <div className="flex flex-col items-end gap-y-4  pt-24">
+          <h1 className="text-2xl pr-12">Testimonials</h1>
+          <div className="w-[90%] border-b border-gray-200 opacity-40 mx-12 mb-2"></div>
+
+          <div className="flex items-end justify-between w-full ">
+            <Image className="ml-12" src="./vector.svg" width={60} height={60} alt="Vector Image" />
+
+            <motion.div ref={repoContainer} whileTap={{ cursor: "grabbing" }} className="cursor-grab flex overflow-hidden w-4/5 rounded-l-xl drop-shadow-2xl">
+              <motion.div drag="x" dragConstraints={{ right: 0, left: -700 }} className="flex gap-4 ">
+                <TestimonialCard name="Jack F" title="Ex Blackrock PM" content="“Love how Loch integrates portfolio analytics and whale watching into one unified app.”" />
+                <TestimonialCard name="Yash P" title="Research, 3poch Crypto Hedge Fund" content="“I use Loch everyday now. I don't think I could analyze crypto whale trends markets without it. I'm addicted!”" />
+                <TestimonialCard name="Shiv S" title="Co-Founder Magik Labs" content="“Managing my own portfolio is helpful and well designed. What’s really interesting is watching the whales though. No one else has made whale tracking so simple.”" />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className='flex flex-col items-center justify-center w-[35vw] bg-white gap-4'>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-2/3">
+          <h1 className="text-4xl text-gray-300 pb-4">Sign up for exclusive access.</h1>
+          <input className="focus:outline-none drop-shadow-lg border border-gray-200 text-black rounded-lg p-4" type="text" value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder="Your email address" />
+          <button className="drop-shadow-lg bg-black hover:bg-gray-800 transition-all rounded-lg p-4" type="submit">Get Started</button>
+        </form>
+        <p className="text-gray-700 font-semibold text-base pt-4">You’ll receive an email with an invite link to join.</p>
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
   )
 }
