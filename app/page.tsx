@@ -127,7 +127,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-y-4 h-[40vh] sm:h-fit sm:p-0 sm:pt-28 pt-8">
+        <div className="flex flex-col items-end gap-y-4 h-[50vh] sm:h-fit sm:p-0 sm:pt-28 pt-8">
           <h1 className="text-2xl pr-12">Testimonials</h1>
           <div className="sm:w-[90%] w-full border-b border-gray-200 opacity-40 mx-12 mb-2"></div>
 
@@ -145,13 +145,13 @@ export default function Home() {
         </div>
 
       </div>
-      <div className='flex flex-col items-center justify-center h-[80vh] sm:h-screen w-full sm:w-[35vw] bg-white drop-shadow-4xl gap-4'>
+      <div className='flex flex-col items-center justify-center h-[60vh] sm:h-screen w-full sm:w-[35vw] bg-white drop-shadow-4xl gap-4'>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-2/3">
           <h1 className="text-4xl text-gray-300 pb-4">Sign up for exclusive access.</h1>
           <input className="focus:outline-none drop-shadow-lg border border-gray-200 text-black rounded-lg p-4" type="text" value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder="Your email address" />
           <button className="drop-shadow-lg bg-black hover:bg-gray-800 transition-all rounded-lg p-4" type="submit">Get Started</button>
         </form>
-        <p className="text-gray-700 font-semibold text-base pt-4">You’ll receive an email with an invite link to join.</p>
+        <p className="text-gray-700 font-semibold text-sm sm:text-base pt-4">You’ll receive an email with an invite link to join.</p>
       </div>
     </main>
   )
